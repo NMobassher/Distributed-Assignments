@@ -1,5 +1,6 @@
 /*
  * Nafis Mobassher 100587562
+ * This is the server class where the server computes for the timezone of what the user wants
  */
 import java.net.*;
 
@@ -9,12 +10,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 import java.io.*;
-/*
- * This is the server class where the server computes for the timezone of what the user wants
- */
+
 public class Server {
 /*
  * The server is set up using the class serverWorker
+ * Here we are creating a port number and sockets to support it
  */
     public static void main(String[] args) {
         Server es = new Server();
@@ -49,7 +49,7 @@ class serverWorker extends Thread {
     public serverWorker(Socket s) {
         client = s;
 
-
+//The thread starts here
         try {;
             x = new DataInputStream(s.getInputStream());
             y = new DataOutputStream(s.getOutputStream());
@@ -61,7 +61,7 @@ class serverWorker extends Thread {
             }
             return;
         }
-        this.start(); // Thread starts here...this start() will call run()
+        this.start(); 
     }
 
 /*
@@ -75,11 +75,12 @@ class serverWorker extends Thread {
             	 DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss z");
              	Date today = Calendar.getInstance().getTime();  
                  String timezone = "";
+                 //Server reads the input
                  time = x.readUTF();
                  System.out.println(time);
 
                  switch (time) {
-                 	case "bdt": 
+                 	case "bst": 
                  		TimeZone.setDefault(TimeZone.getTimeZone("BST"));
               		 	timezone = df.format(today);
               		 	break;
@@ -93,7 +94,7 @@ class serverWorker extends Thread {
                  		TimeZone.setDefault(TimeZone.getTimeZone("CST"));           		       
               		 	timezone = df.format(today);
               		 	break;
-                 	case "sbt":
+                 	case "sst":
                  		TimeZone.setDefault(TimeZone.getTimeZone("SST"));          		       
               		 	timezone = df.format(today);
               		 	break;
@@ -101,7 +102,7 @@ class serverWorker extends Thread {
                  		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));          		       
               		 	timezone = df.format(today);
               		 	break;
-                 	case "pdt":
+                 	case "pst":
                  		TimeZone.setDefault(TimeZone.getTimeZone("PST"));          		       
               		 	timezone = df.format(today);
               		 	break;
@@ -169,7 +170,6 @@ class serverWorker extends Thread {
                  y.flush();
                  
                  client.close();
-           
            
         } catch (IOException e) {
             System.out.println("Exception caught...");
