@@ -97,5 +97,6 @@ public class Time {
         
         btnExit.setBounds(120, 280, 120, 30);
         frame.getContentPane().add(btnExit);
+        System.out.println("The Time is: " + time);
     }
 }

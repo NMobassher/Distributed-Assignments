@@ -2,13 +2,14 @@
  * Nafis Mobassher 100587562
  */
 import java.io.*;
+
 import java.net.*;
 /*
  * This is the Client Handler Class
  */
 public class EchoClient {
 
-    private String timeZone;
+    String timeZone;
 	String time;
     Socket sock;
     DataInputStream dis;
